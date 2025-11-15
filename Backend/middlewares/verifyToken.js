@@ -3,9 +3,9 @@ const jwt = require("jsonwebtoken");
 dotenv.config();
 
 const verifyToken = (req, res, next) => {
-  const authHeader = req.headers.authorization; // ✅ بدّل token بـ authorization
+  const authHeader = req.headers.authorization; 
   if (authHeader) {
-    const token = authHeader.split(" ")[1]; // ✅ خليها تفصل بمسافة
+    const token = authHeader.split(" ")[1];
     jwt.verify(token, process.env.JWT_SEC, (err, user) => {
       if (err) return res.status(403).json("Token is not valid!");
       req.user = user;

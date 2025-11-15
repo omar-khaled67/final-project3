@@ -27,12 +27,7 @@ function Footer() {
             <li>
               <a href="#" className="hover:underline">Contact</a>
             </li>
-            <Link to="/login">
-              <li>Login</li>
-            </Link>
-            <Link to="/admin">
-              <li>Admin</li>
-            </Link>
+           
           </ul>
             </div>
             <div className='w-full md:w-1/3'>

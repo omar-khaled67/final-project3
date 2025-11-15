@@ -1,99 +1,73 @@
-import React, { useState } from 'react'
-
-
-import {
-
-  FaBox, FaCalendarAlt,
-  FaChartBar,
-  FaClipboard, FaClipboardList,
-  FaCog, FaElementor,
-  FaHdd, FaHome,
-  FaUser, FaUsers,
-} from "react-icons/fa";
-import { Link } from "react-router-dom"
+import React, { useState } from 'react';
+import { FaBox, FaUsers, FaHome, FaSignOutAlt, FaArrowLeft } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/userRedux";
+import { persistor } from "../redux/store";
 
 function Menu() {
-  const [activeLink, setactiveLink] = useState("/admin");
+  const [activeLink, setActiveLink] = useState("/admin");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleactiveLink = (link) => {
-    setactiveLink(link)
+  const handleLogout = () => {
+    dispatch(logout());
+    persistor.purge().then(() => {
+      navigate("/"); // العودة للصفحة الرئيسية بعد logout
+    });
+  };
 
+  const handleActiveLink = (link) => {
+    setActiveLink(link);
   }
+
   return (
-
-    <div className=' p-[20px] w-[350px] bg-gray-100 shadow-lg'>
-
+    <div className='p-[20px] w-[350px] bg-gray-100 shadow-lg min-h-screen'>
       <ul className='flex flex-col items-start justify-start mt-[20px] pl-[20px]'>
-        <Link to="/admin" onClick={() => handleactiveLink("/admin")}>
+        <Link to="/admin" onClick={() => handleActiveLink("/admin")}>
           <li className={`flex items-center text-[20px] cursor-pointer mt-[20px] transition-colors duration-100 font-semibold
-          ${activeLink === "/admin" ? "bg-red-300 p-[10px] text-white" : ""} `}>
-
-            <FaHome className={`mr-[15px] ${activeLink === "/admin" ? "text-red-50" : "text-red-500"}`} />Home</li>
-        </Link>
-
-        <Link> <li className='flex items-center text-[20px] cursor-pointer mt-[20px] transition-colors duration-100 font-semibold'>
-
-          <FaUser className='mr-[15px] text-red-500' />Profile</li>
+            ${activeLink === "/admin" ? "bg-red-300 p-[10px] text-white" : ""}`}>
+            <FaHome className={`mr-[15px] ${activeLink === "/admin" ? "text-red-50" : "text-red-500"}`} /> Home
+          </li>
         </Link>
 
         <hr className='w-full border-gray-300 my-[20px]' />
-        <Link to="/admin/donors" onClick={() => handleactiveLink("/admin/donors")}>
-          <li className={`flex items-center text-[20px] cursor-pointer mt-[20px] transition-colors duration-100 font-semibold
-          ${activeLink === "/admin/donors" ? "bg-red-300 p-[10px] text-white" : ""} `}>
 
-            <FaBox className={`mr-[15px] ${activeLink === "/admin/donors" ? "text-red-50" : "text-red-500"}`} />Donors</li>
+        <Link to="/admin/donors" onClick={() => handleActiveLink("/admin/donors")}>
+          <li className={`flex items-center text-[20px] cursor-pointer mt-[20px] font-semibold
+            ${activeLink === "/admin/donors" ? "bg-red-300 p-[10px] text-white" : ""}`}>
+            <FaBox className={`mr-[15px] ${activeLink === "/admin/donors" ? "text-red-50" : "text-red-500"}`} /> Donors
+          </li>
         </Link>
 
-        <Link to="/admin/prospects" onClick={() => handleactiveLink("/admin/prospects")}>
-          <li className={`flex items-center text-[20px] cursor-pointer mt-[20px] transition-colors duration-100 font-semibold
-          ${activeLink === "/admin/prospects" ? "bg-red-300 p-[10px] text-white" : ""} `}>
-
-            <FaUsers className={`mr-[15px] ${activeLink === "/admin/prospects" ? "text-red-50" : "text-red-500"}`} />Prospects</li>
+        <Link to="/admin/prospects" onClick={() => handleActiveLink("/admin/prospects")}>
+          <li className={`flex items-center text-[20px] cursor-pointer mt-[20px] font-semibold
+            ${activeLink === "/admin/prospects" ? "bg-red-300 p-[10px] text-white" : ""}`}>
+            <FaUsers className={`mr-[15px] ${activeLink === "/admin/prospects" ? "text-red-50" : "text-red-500"}`} /> Prospects
+          </li>
         </Link>
-
-        <Link> <li className='flex items-center text-[20px] cursor-pointer mt-[20px] transition-colors duration-100 font-semibold'>
-
-          <FaHome className='mr-[15px] text-red-500' />Orders</li>
-        </Link>
-        <hr className='w-full border-gray-300 my-[20px]' />
-
-        <li className='flex items-center text-[20px] cursor-pointer mt-[20px] transition-colors duration-100 font-semibold'>
-
-          <FaElementor className='mr-[15px] text-red-500' />Elements</li>
-
-        <li className='flex items-center text-[20px] cursor-pointer mt-[20px] transition-colors duration-100 font-semibold'>
-
-          <FaCog className='mr-[15px] text-red-500' />Settings</li>
-
-        <li className='flex items-center text-[20px] cursor-pointer mt-[20px] transition-colors duration-100 font-semibold'>
-
-          <FaHdd className='mr-[15px] text-red-500' />Backups</li>
 
         <hr className='w-full border-gray-300 my-[20px]' />
 
-        <li className='flex items-center text-[20px] cursor-pointer mt-[20px] transition-colors duration-100 font-semibold'>
+        <button
+          onClick={handleLogout}
+          className="flex items-center text-[20px] cursor-pointer mt-[30px] font-semibold text-red-600 
+            hover:bg-red-200 w-full p-[10px] rounded transition"
+        >
+          <FaSignOutAlt className="mr-[15px]" /> Logout
+        </button>
 
-          <FaChartBar className='mr-[15px] text-red-500' />Charts</li>
-
-        <li className='flex items-center text-[20px] cursor-pointer mt-[20px] transition-colors duration-100 font-semibold'>
-
-          <FaClipboard className='mr-[15px] text-red-500' />All logs</li>
-
-        <li className='flex items-center text-[20px] cursor-pointer mt-[20px] transition-colors duration-100 font-semibold'>
-
-          <FaCalendarAlt className='mr-[15px] text-red-500' />Calender</li>
-
-
-
-
-
-
+        <button
+          onClick={() => navigate('/')}
+          className="flex items-center text-[20px] cursor-pointer mt-[30px] font-semibold text-red-600 
+            hover:bg-red-200 w-full p-[10px] rounded transition"
+        >
+          <FaArrowLeft className="mr-[15px]" /> Back to Home
+        </button>
 
       </ul>
-
     </div>
-
   )
 }
 
-export default Menu
+export default Menu;

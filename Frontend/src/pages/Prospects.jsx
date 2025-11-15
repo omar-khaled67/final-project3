@@ -2,7 +2,7 @@ import { FaTrash } from "react-icons/fa";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { publicRequest } from "../requestMethod"; // تأكد إن المسار ده صح
+import { publicRequest } from "../requestMethod"; 
 
 const Prospects = () => {
   const [prospects, setProspects] = useState([]);
@@ -10,12 +10,12 @@ const Prospects = () => {
   useEffect(() => {
     const getAllProspects = async () => {
       try {
-        const res = await publicRequest.get("/prospect"); // خليه كله small letters
-        console.log("📦 Prospects from server:", res.data);
+        const res = await publicRequest.get("/prospect"); 
+        console.log( res.data);
         setProspects(res.data);
-        console.log("✅ Prospects set in state:", res.data);
+        console.log( res.data);
       } catch (error) {
-        console.log("❌ Error fetching prospects:", error);
+        console.log( error);
       }
     };
     getAllProspects();
@@ -23,8 +23,8 @@ const Prospects = () => {
 
   const handleDelete = async (id) => {
     try {
-      await publicRequest.delete(`/prospects/${id}`);
-      // بدل ما تعمل reload خليك تحدث الحالة
+      await publicRequest.delete(`/prospect/${id}`);
+      
       setProspects((prev) => prev.filter((item) => item._id !== id));
     } catch (error) {
       console.log(error);
@@ -72,7 +72,7 @@ const Prospects = () => {
         <DataGrid
           columns={columns}
           checkboxSelection
-          getRowId={(row) => row._id} // هنا التعديل المهم
+          getRowId={(row) => row._id} 
           rows={prospects}
           autoHeight
         />

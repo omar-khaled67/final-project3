@@ -1,7 +1,7 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { publicRequest } from "../requestMethod";
+
 
 
 const Prospect = () => {
@@ -22,7 +22,7 @@ const Prospect = () => {
     getProspect();
   }, [prospectId]);
 
-  const handleApprove = async () => {
+  const approveProspect = async () => {
     try {
       await publicRequest.post("/donors", {
         name: prospect.name,
@@ -34,7 +34,7 @@ const Prospect = () => {
         date: prospect.date,
         weight: prospect.weight,
       });
-      await publicRequest.delete(`/prospects/${prospectId}`);
+      await publicRequest.delete(`/prospect/${prospectId}`);
       navigate('/admin/donors');
     } catch (error) {
       console.log(error);
@@ -82,7 +82,7 @@ const Prospect = () => {
         </span>
         <button
           className="bg-red-400 text-white cursor-pointer p-[5px] w-[150px] m-[10px]"
-          onClick={handleApprove}
+          onClick={approveProspect}
         >
           Approve
         </button>

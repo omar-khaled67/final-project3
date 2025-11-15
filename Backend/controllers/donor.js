@@ -1,6 +1,6 @@
 const Donor=require("../models/Donor");
 
-//create Donor
+
 const createDonor= async (req,res)=>{
     try{
         const newDonor=Donor(req.body);

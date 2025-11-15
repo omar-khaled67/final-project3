@@ -1,54 +1,150 @@
-import React from 'react'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
+import { publicRequest } from "../requestMethod";
 
-function Contact() {
+const Contact = () => {
+  const [inputs, setInputs] = useState({});
+
+  const handleChange = (e) => {
+    setInputs((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleAddProspect = async () => {
+    try {
+      
+      await publicRequest.post("/prospect", inputs);
+      toast.success("You have been successfully saved to the database.");
+      setInputs({});
+    } catch (error) {
+      toast.warning("Make sure you have filled all fields.");
+    }
+  };
+
+  console.log(inputs);
+
   return (
-    <div className='flex items-center justify-center h-auto my-[100px]'>
-        <div className='flex flex-col bg-gray-100 w-[50%] h-auto p-[50px]  items-center justify-center '>
-            <span className='text-[20px] my-[20px]'>Do you want to donate blood? Fill in the information.</span>
-            <label htmlFor="" className='text-[18px] mt-[10px] font-semibold'>Name</label>
-            <input type="text" className='w-[350px] p-[15px]' placeholder='omar khaled' />
+    <div className="flex items-center justify-center h-auto my-[100px]">
+      <div className="flex flex-col bg-gray-100 w-[50%] h-auto p-[50px] items-center justify-center  ">
+        <span className="text-[20px] my-[20px]">
+          Do you want to donate blood? Fill in the information.
+        </span>
+        <label htmlFor="name" className="text-[18px] mt-[10px]">
+          Name
+        </label>
+        <input
+          type="text"
+          name="name"
+          value={inputs.name || ""}
+          className="w-[350px] p-[15px]"
+          placeholder="John Doe"
+          onChange={handleChange}
+        />
 
-            <label htmlFor="" className='text-[18px] mt-[10px] font-semibold'>Telephone</label>
-            <input type="text" className='w-[350px] p-[15px]' placeholder='6474383728' />
+        <label htmlFor="tel" className="text-[18px] mt-[10px]">
+          Telephone
+        </label>
+        <input
+          type="text"
+          name="tel"
+          value={inputs.tel || ""}
+          className="w-[350px] p-[15px]"
+          placeholder="+234 678 908"
+          onChange={handleChange}
+        />
 
-            <label htmlFor="" className='text-[18px] mt-[10px] font-semibold'>Email</label>
-            <input type="text" className='w-[350px] p-[15px]' placeholder='omarkhaled@gmail.com' />
+        <label htmlFor="email" className="text-[18px] mt-[10px]">
+          Email
+        </label>
+        <input
+          type="text"
+          name="email"
+          value={inputs.email || ""}
+          className="w-[350px] p-[15px]"
+          placeholder="jamesdoe@gmail.com"
+          onChange={handleChange}
+        />
 
-            <label htmlFor="" className='text-[18px] mt-[10px] font-semibold'>Address</label>
-            <input type="text" className='w-[350px] p-[15px]' placeholder='123 Town Street' />
+        <label htmlFor="address" className="text-[18px] mt-[10px]">
+          Address
+        </label>
+        <input
+          type="text"
+          name="address"
+          value={inputs.address || ""}
+          className="w-[350px] p-[15px]"
+          placeholder="123 Sydney AUS"
+          onChange={handleChange}
+        />
 
-            <label htmlFor="" className='text-[18px] mt-[10px] font-semibold'>Weight</label>
-            <input type="text" className='w-[350px] p-[15px]' placeholder='50kg' />
+        <label htmlFor="weight" className="text-[18px] mt-[10px]">
+          Weight
+        </label>
+        <input
+          type="number"
+          name="weight"
+          value={inputs.weight || ""}
+          className="w-[350px] p-[15px]"
+          placeholder="50kg"
+          onChange={handleChange}
+        />
 
-            <label htmlFor="" className='text-[18px] mt-[10px] font-semibold'>Blood Group</label>
-            <select name="" id="" className='w-[350px] p-[15px]'>
-                <option value="">Select Blood Group</option>
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B-">B-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
-            </select>
-            
-            <label htmlFor="" className='text-[18px] mt-[10px] font-semibold'>Age</label>
-            <input type="text" className='w-[350px] p-[15px]' placeholder='20' />
+        <label htmlFor="bloodGroup" className="text-[18px] mt-[10px]">
+          Blood Group
+        </label>
+        <select
+          id="bloodGroup"
+          name="bloodgroup"
+          value={inputs.bloodgroup || ""}
+          className="w-[350px] p-[15px]"
+          onChange={handleChange}
+        >
+          <option value="">Select Blood Group</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
 
-            <label htmlFor="" className='text-[18px] mt-[10px] font-semibold'>
-                Do you have eny diseases
-            </label>
-            <textarea name="" id="" className='w-[350px] p-[15px]'/>
+        <label htmlFor="age" className="text-[18px] mt-[10px]">
+          Age
+        </label>
+        <input
+          type="number"
+          name="age"
+          value={inputs.age || ""}
+          className="w-[350px] p-[15px]"
+          placeholder="30 years"
+          onChange={handleChange}
+        />
 
-            <button className='bg-red-500 p-3 mt-3 w-[350px] cursor-pointer text-white'> Submit</button>
+        <label htmlFor="diseases" className="text-[18px] mt-[10px]">
+          Do you have any diseases?
+        </label>
+        <textarea
+          name="diseases"
+          value={inputs.diseases || ""}
+          className="w-[350px] p-[15px]"
+          placeholder="I have hypertension."
+          onChange={handleChange}
+        />
 
-       
-
-        </div>
+        <button
+          className="bg-red-500 p-3 mt-3 w-[350px] cursor-pointer text-white"
+          onClick={handleAddProspect}
+        >
+          Submit
+        </button>
+        <ToastContainer />
+      </div>
     </div>
+  );
+};
 
-  )
-}
-
-export default Contact
+export default Contact;

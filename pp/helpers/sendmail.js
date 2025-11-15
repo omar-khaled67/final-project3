@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
-import { create } from './../../Backend/node_modules/@types/whatwg-url/lib/URLSearchParams.d';
-import { configDotenv } from './../../Backend/node_modules/dotenv/lib/main.d';
+import { create } from '../../Backend/node_modules/@types/whatwg-url/lib/URLSearchParams';
+import { configDotenv } from 'dotenv';
 const dotenv = require("dotenv");
 dotenv.config();
 
